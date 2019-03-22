@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.30, minimum-scale=0.10, maximum-scale=10.0, user-scalable=1">
 <title>SFV OKI LOL</title>
 <style>
 
@@ -128,6 +129,10 @@
     background-color: #030;
   }
 
+  table.FRAMES thead th {
+    cursor: ns-resize;
+  }
+
   #LINKS div.COL {
     display: inline-block;
     vertical-align: top;
@@ -237,6 +242,9 @@
     color: #ccc;
   }
 
+  .GRID > span.UCCOUNT {
+    color: #777;
+  }
 
   .UCLICK:hover {
     color: #fff;
@@ -253,6 +261,12 @@
 
   button.SEL {
     background-color: #ffc;
+  }
+
+  #OKIOKI.STICK {
+    background-color: #000;
+    position: fixed;
+    bottom: 0;    
   }
 
   #OKI {    
@@ -312,6 +326,13 @@
     margin-left: 50px;
   }
  
+  li {
+    white-space: nowrap;
+  }
+
+  button.CHARURN {
+    background-color: #777;
+  }
 </style>
 <style id="STYLEOKI1"></style>
 <style id="STYLEOKI2"></style>
@@ -327,7 +348,17 @@
 </head>
 <body>
 <div id="TUT">
-<a href="https://twitter.com/arlieth/status/743024207689351168">SFV: Tutorial on Toolassisted's Okizeme Calculator and Frametrapped Hitboxes</a>
+<!-- U NO C ARLIETH <a href="https://twitter.com/arlieth/status/743024207689351168">SFV: Tutorial on Toolassisted's Okizeme Calculator and Frametrapped Hitboxes</a><br> -->
+<ul>
+<li><a href="https://arlypedia.com/Toolassisted/Oki">Arlypedia: Guide to using Toolassisted's Okizeme Calculator</a></li>
+<li><a href="https://www.reddit.com/r/StreetFighter/comments/5zrq81/tutorial_tool_assisted_oki_calculator_frame_kill/">Tutorial: Tool Assisted OKI Calculator + Frame Kill (With Pictures)</a></li>
+<li><a href="https://twitter.com/PleaseWest/status/807021911309893632">Guide to tool assisted's oki calculator: How to use ToolAssisted's oki calculator</a></li>
+<li><a href="https://twitter.com/Arlieth/status/743024207689351168">SFV: Tutorial on Toolassisted's Okizeme Calculator and Frametrapped Hitboxes</a></li>
+<li><a href="https://twitter.com/CrossCounter_TR/status/804478738532626434">.@gootecks helps a student integrate throws into his Rashid game with the help of the @TOOLASSlSTED oki calc.</a></li>
+<li><a href="https://twitter.com/CrossCounter_TR/status/817237914128158720">.@gootecks shows a Zangief player how to use @TOOLASSlSTED oki calculator to figure out what to do after...</a></li>
+<li><a href="https://twitter.com/AutoMattock/status/857438211903193091">An intentionally brief tutorial on how to use @TOOLASSlSTED 's okizeme calculator in SFV.</a></li>
+<li><a href="https://twitter.com/Kulodemandril/status/859134881867198465">SFV - como usar tool assist oki calculator</a></li>
+</ul>
 </div>
 <div id="REDDIT">
 <!-- <iframe height="302px" width="100%" scrolling="no" frameborder="0" src="//www.redditmedia.com/r/SFV_GUILE/comments/4kceto/sfv_guile_oki_lol/d3dvqky?embed=true&amp;context=0&amp;depth=2&amp;showedits=true&amp;123" style="height: 302px; width: 100%; display: block; max-width: 800px; min-width: 220px; margin: 10px 0px; box-shadow: rgba(0, 0, 0, 0.0470588) 0px 0px 5px 0.5px; box-sizing: border-box;"></iframe>
@@ -370,7 +401,11 @@ SFV OKI LOL
   KDR  = NORMAL RECOVERY
   KDBR = BACK RECOVERY
 
+  <a href="https://www.reddit.com/r/StreetFighter/comments/56cg6x/remember_meaties_are_safer_than_usual/d8i8i7e">I'm trying to figure it out but I don't really understand how to use this. Can you explain?</a>
+
   <a href="https://twitter.com/TOOLASSlSTED/status/731544334781300736" target="_blank">https://twitter.com/TOOLASSlSTED/status/731544334781300736</a>
+
+  <a href="https://twitter.com/TOOLASSlSTED/status/786720247806132224">SFV DONATE 2 STRONG LOL</a>
 
 U KEY U SHORTCUT LOL
 
@@ -387,6 +422,8 @@ U KEY U SHORTCUT LOL
 
   DELETE = OKI DELETE
 
+  D = DASH
+
 </pre>
 <script src="d3.min.js"></script>
 <script>
@@ -396,22 +433,23 @@ var MEOKI = 1;
 var KDMOVE = null;
 var OKIMOVE = null;
 var FRAMEKILL = 19;
-var HASHKD = 91+1;
-var HASHKDBR = 37+1;
-var HASHKDR = 32+1;
-var HASHCHAR = "GUL";
+var HASHKD = 55+1;
+var HASHKDBR = 6+1;
+var HASHKDR = 6+1;
+var HASHCHAR = "ZKU";
 var HASHSTARTUP = 5;
 var HASHACTIVE = 4;
 var HASHRECOVERY = 10;
 var HASHLIST = [];
-var OKILIST = [{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-              ,{FRAMEKILL:30,STARTUP:7,UCACTIVE:"",ACTIVE:3,RECOVERY:18,MOVE:"stand HP",DATA:""}
-              ,{FRAMEKILL:84,STARTUP:7,UCACTIVE:"",ACTIVE:3,RECOVERY:18,MOVE:"stand HP",DATA:""}
-              ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-              ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-              ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-              ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-              ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}];
+var OKILIST = [{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+              ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+              ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+              ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+              ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+              ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+              ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+              ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}];
+var UCROW = {};
 
 function MECHASH() {
   var h = window.location.hash.substr(1).split("/");
@@ -434,7 +472,22 @@ function MECHASH() {
         var hh = h[i+3].split(",");
         if (hh.length >= 1 && !isNaN(hh[0]) && hh[0] != "") OKILIST[i].FRAMEKILL = +(hh[0].trim());
         if (hh.length >= 2 && !isNaN(hh[1]) && hh[1] != "") OKILIST[i].STARTUP = +(hh[1].trim());
-        if (hh.length >= 3 && !isNaN(hh[2]) && hh[2] != "") OKILIST[i].ACTIVE = +(hh[2].trim());
+        // if (hh.length >= 3 && !isNaN(hh[2]) && hh[2] != "") OKILIST[i].ACTIVE = +(hh[2].trim());
+        if (hh.length >= 3 && hh[2] != "") {
+          OKILIST[i].MECACTIVE = hh[2].trim();
+          if (!isNaN(OKILIST[i].MECACTIVE) && OKILIST[i].MECACTIVE != "") {
+            OKILIST[i].ACTIVE = +OKILIST[i].MECACTIVE;
+            OKILIST[i].UCACTIVE = "";
+          } else { 
+            OKILIST[i].ACTIVE = OKILIST[i].MECACTIVE.split(/[()]/)
+            .map(function(x){return parseInt(x)||0;})
+            .reduce(function(a,b){return a+b});
+
+            OKILIST[i].UCACTIVE = OKILIST[i].MECACTIVE.split(/[()]/)
+            .map(function(x,i){return parseInt(x)||0;})
+            .reduce(function(a,b,i){return (i==1?Array(1+a).join("A"):a)+Array(1+b).join((i%2)==0?"A":"r")});
+          }
+        }
         if (hh.length >= 4 && !isNaN(hh[3]) && hh[3] != "") OKILIST[i].RECOVERY = +(hh[3].trim());
         if (hh.length >= 5 && hh[4] != "") OKILIST[i].MOVE = (hh[4].trim().replace(/\+/g," ").replace(/[^A-Za-z0-9 -]/g,"").trim()); else OKILIST[i].MOVE = "";
       }
@@ -450,7 +503,8 @@ function UCHASH() {
         ;
 
   for (var i=1;i<=7;i++) {
-    h += OKILIST[i].FRAMEKILL + "," + OKILIST[i].STARTUP + "," + OKILIST[i].ACTIVE + "," + OKILIST[i].RECOVERY + "," + OKILIST[i].MOVE.trim().replace(/\s+/g,"+") + "/";
+    // h += OKILIST[i].FRAMEKILL + "," + OKILIST[i].STARTUP + "," + OKILIST[i].ACTIVE + "," + OKILIST[i].RECOVERY + "," + OKILIST[i].MOVE.trim().replace(/\s+/g,"+") + "/";
+    h += OKILIST[i].FRAMEKILL + "," + OKILIST[i].STARTUP + "," + OKILIST[i].MECACTIVE + "," + OKILIST[i].RECOVERY + "," + OKILIST[i].MOVE.trim().replace(/\s+/g,"+") + "/";
   }
 
   if (h != window.location.hash) { window.location.hash = h; }
@@ -466,9 +520,11 @@ REDDITEMBEDCHAR["ALX"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_ALEX/comme
 REDDITEMBEDCHAR["BLR"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggj50/sfv_vega/d3dxbfc' + REDDITEMBED2;
 REDDITEMBEDCHAR["BRD"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggirj/sfv_birdie/d3efskm' + REDDITEMBED2;
 REDDITEMBEDCHAR["CMY"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggis5/sfv_cammy/d3dxc3b' + REDDITEMBED2;
+REDDITEMBEDCHAR["ED"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_ED/comments/6ao61o/sfv_ed_oki_lol/dhg2v5o/' + REDDITEMBED2;
 REDDITEMBEDCHAR["FAN"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggiul/sfv_fang/d3dxc8q' + REDDITEMBED2;
 REDDITEMBEDCHAR["GUL"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_GUILE/comments/4kceto/sfv_guile_oki_lol/d3dvqky' + REDDITEMBED2;
 REDDITEMBEDCHAR["KEN"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggivy/sfv_ken/d3dxcfr' + REDDITEMBED2;
+REDDITEMBEDCHAR["KLN"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_KOLIN/comments/5wm2gp/sfv_kolin_oki_lol/deb5l4i' + REDDITEMBED2;
 REDDITEMBEDCHAR["KRN"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_KARIN/comments/4kcmou/sfv_karin_oki_lol/d3dx8n1' + REDDITEMBED2;
 REDDITEMBEDCHAR["LAR"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggiwo/sfv_laura/d3dxckx' + REDDITEMBED2;
 REDDITEMBEDCHAR["NCL"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggj2w/sfv_necalli/d3dxcp3' + REDDITEMBED2;
@@ -476,35 +532,36 @@ REDDITEMBEDCHAR["RSD"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterT
 REDDITEMBEDCHAR["RYU"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggj4n/sfv_ryu/d3ba8uo' + REDDITEMBED2;
 REDDITEMBEDCHAR["VEG"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggj1k/sfv_m_bison/d3dxd5l' + REDDITEMBED2;
 REDDITEMBEDCHAR["ZGF"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggj5j/sfv_zangief/d3dxe7v' + REDDITEMBED2;
-
 REDDITEMBEDCHAR["CNL"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggitb/sfv_chunli/d3ha6vc' + REDDITEMBED2;
 REDDITEMBEDCHAR["DSM"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggitz/sfv_dhalsim/d3ha7hb' + REDDITEMBED2;
 REDDITEMBEDCHAR["NSH"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggj2e/sfv_nash/d3ha7xy' + REDDITEMBED2;
 REDDITEMBEDCHAR["RMK"] = REDDITEMBED1 + 'https://www.reddit.com/r/StreetFighterTech/comments/4ggj3d/sfv_r_mika/d3ha7pv' + REDDITEMBED2;
-
 REDDITEMBEDCHAR["BSN"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_BALROG/comments/4qz8zu/sfv_balrog_oki_lol/d4x0z25' + REDDITEMBED2;
-
 REDDITEMBEDCHAR["IBK"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_IBUKI/comments/4rhbdf/sfv_ibuki_oki_lol/d513ztk' + REDDITEMBED2;
-
-
 REDDITEMBEDCHAR["JRI"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_JURI/comments/4utand/sfv_juri_oki_lol/d5snzco' + REDDITEMBED2;
+REDDITEMBEDCHAR["URN"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_URIEN/comments/54dgec/sfv_urien_oki_lol/d80wput' + REDDITEMBED2;
+REDDITEMBEDCHAR["GOK"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_AKUMA/comments/5jj12t/sfv_akuma_oki_lol/dbgiuxt' + REDDITEMBED2;
+REDDITEMBEDCHAR["ABG"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_ABIGAIL/comments/6qh016/sfv_abigail_oki_lol/dkx6iyp/' + REDDITEMBED2;
+REDDITEMBEDCHAR["MNT"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_MENAT/comments/70ifib/sfv_menat_oki_lol/dn3cgkd/' + REDDITEMBED2;
+REDDITEMBEDCHAR["ZKU"] = REDDITEMBED1 + 'https://www.reddit.com/r/SFV_ZEKU/comments/7aiijg/sfv_zeku_oki_lol/dpa6e32/' + REDDITEMBED2;
 
 
 var CHARS = [
-["ALX", "BLR", //"BLR2",
+["ABG","ALX", "BLR", //"BLR2",
 "BRD", //"BRD2", 
 "BSN", "CMY", "CNL", //"CNL2"
-"DSM", 
-"FAN", "GUL", "IBK", "JRI", "KEN", 
+"DSM", "ED",
+"FAN", "GOK", "GUL", "IBK", "JRI", "KEN", "KLN",
 // ],
 // [
-"KRN", "LAR", 
+"KRN", "LAR", "MNT",
 "NCL", //"NCL2", 
 "NSH", "RMK", 
 "RSD", "RYU", //"RYU2", 
-"VEG", //"VEG2",
+"URN", "VEG", //"VEG2",
 "ZGF",
-"RESET OKI","FRAME KILL","HELP","VIEW TOTAL TOP"
+"ZKU",
+"RESET OKI","FRAME KILL","HELP","VIEW TOTAL TOP","STICK OKI"
 ]
 ];
 
@@ -530,6 +587,11 @@ var CHARS = [
           t0.insertBefore(t4,t1);
           t0.insertBefore(t5,t1);
           return;
+        } else if (d == "STICK OKI") {
+          var stick = !d3.select("#OKIOKI").classed("STICK");
+          d3.select("#OKIOKI").classed("STICK",stick);
+          d3.select(this).classed("SEL",stick);
+          return;
         } else if (d == "TOTAL2") {
           var t1 = d3.selectAll("#KILLS")[0][0];
           var t2 = d3.selectAll("#TOTALS")[0][0];
@@ -550,13 +612,13 @@ var CHARS = [
           return;
         } else if (d == "RESET OKI") {
           OKILIST = [{FRAMEKILL:1,STARTUP:0,ACTIVE:0,RECOVERY:0,MOVE:""}
-                        ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-                        ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-                        ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-                        ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-                        ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-                        ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
-                        ,{FRAMEKILL:1,STARTUP:0,UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}];
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}];
 
           MECOKI(7); UCOKI(OKILIST[MEOKI].FRAMEKILL, false);
           MECOKI(6); UCOKI(OKILIST[MEOKI].FRAMEKILL, false);
@@ -587,6 +649,25 @@ var CHARS = [
         
         HASHCHAR = d;
         d3.tsv(HASHCHAR+".txt", UCGILLEY);
+
+          OKILIST = [{FRAMEKILL:1,STARTUP:0,ACTIVE:0,RECOVERY:0,MOVE:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}
+                        ,{FRAMEKILL:1,STARTUP:0,MECACTIVE:"",UCACTIVE:"",ACTIVE:0,RECOVERY:0,MOVE:"",DATA:""}];
+
+          MECOKI(7); UCOKI(OKILIST[MEOKI].FRAMEKILL, false);
+          MECOKI(6); UCOKI(OKILIST[MEOKI].FRAMEKILL, false);
+          MECOKI(5); UCOKI(OKILIST[MEOKI].FRAMEKILL, false);
+          MECOKI(4); UCOKI(OKILIST[MEOKI].FRAMEKILL, false);
+          MECOKI(3); UCOKI(OKILIST[MEOKI].FRAMEKILL, false);
+          MECOKI(2); UCOKI(OKILIST[MEOKI].FRAMEKILL, false);
+          MECOKI(1); UCOKI(OKILIST[MEOKI].FRAMEKILL, false);
+          UCHASH();
+
       })
       .text(function(d,i){return d;});
 
@@ -649,10 +730,9 @@ function UCFK() {
   ADV.html(adv);
 }
 function UCOKI(kd, hash) {
-
   var active = OKILIST[MEOKI].ACTIVE;
-  var startup = OKILIST[MEOKI].STARTUP-1;
   var recovery = OKILIST[MEOKI].RECOVERY;
+  var startup = OKILIST[MEOKI].STARTUP-((active>0||(recovery>0&&active==0))?1:0);
   var move = OKILIST[MEOKI].MOVE;
   var data = OKILIST[MEOKI].DATA;
   var UCACTIVE = OKILIST[MEOKI].UCACTIVE; // console.log(UCACTIVE);
@@ -682,10 +762,13 @@ function UCOKI(kd, hash) {
   var adv = ""
   var text = "";
   var spanclass = "";
+  var title = "";
   for (var i=1;i<=119;i++) {
 
     if (i<FRAMEKILL) {
       text = CHARPLUS;
+      // text = (FRAMEKILL-i)%10;
+      title = (FRAMEKILL-i)%10;
       spanclass = "";
     } else {
       if (i <= FRAMEKILL+startup-1) {
@@ -707,8 +790,15 @@ function UCOKI(kd, hash) {
         text = "r";
         spanclass = "RECOVERY";
       } else {
-        text = CHARMINUS;
+        text = CHARMINUS;        
         spanclass = "";
+        // if (active+recovery>0) {
+        if (FRAMEKILL > 1 && startup+active+recovery==0) {
+          text = (i-(FRAMEKILL+startup+active+recovery)+1)%10;
+          if (text != "0") spanclass = "UCCOUNT";
+          // if (text == "0") text = CHARMINUS;
+          if (text == "0") text = (i-(FRAMEKILL+startup+active+recovery)+1)/10;
+        }
       }
     }
 
@@ -754,11 +844,36 @@ function UCGILLEY(rows){
   // TOTALS.append("br");
 
   var keys = d3.keys(rows[0]);
-  
-  KDTABLE.append("thead").append("tr").selectAll("th").data(["KD ADV","KDR ADV","KDBR ADV"].concat(keys)).enter().append("th").text(function(d){return d;});
-  KDTABLE.append("tbody").selectAll("tr").data(rows.filter(function(d){return !isNaN(d["KD Adv."]) && d["KD Adv."] != "";})).enter().append("tr")
-            .classed("UC",function(d){return +d["KDRB Adv."]==HASHKDBR-1 && +d["KDR Adv."]==HASHKDR-1 && +d["KD Adv."]==HASHKD-1; })
-            .selectAll("td").data(function(d){ return [{key:"KD",value:"+"+d["KD Adv."]},{key:"KDR",value:"+"+d["KDR Adv."]},{key:"KDBR",value:"+"+d["KDRB Adv."]}].concat(d3.entries(d));})
+  function DATA_KDBR(d) { return d["KDRB Adv."] || d["HIT KDBR"] || d["CH KDBR"]; }
+  function DATA_KDR(d) { return d["KDR Adv."] || d["HIT KDR"] || d["CH KDR"]; }
+  function DATA_KD(d) { return d["KD Adv."] || d["HIT KD"] || d["CH KD"]; }
+  function DATA_ADV_HIT(d) { return d["Hit Advantage"] || d["HIT ADV"] || "-"; }
+  function DATA_ADV_BLK(d) { return d["Block Advantage"] || d["BLK ADV"] || "-"; }
+  function DATA_STARTUP(d) { return d["Startup"] || d["START UP"] || ""; }
+  function DATA_ACTIVE(d) { return d[" Active"] || d["ACTIVE"]; }
+  function DATA_RECOVERY(d) { return d["Recovery"] || d["RECOVERY"]; }
+  function DATA_TOTAL(d) { return d["Total"] || d["Total "]; }
+
+  rows.forEach(function(r,i){r.row=i;});
+
+  KDTABLE.append("thead").append("tr").selectAll("th").data(["KD ADV","KDR ADV","KDBR ADV"].concat(keys)).enter().append("th").text(function(d){return d;})
+            .on("click",function(d,i){
+              KDTABLE.selectAll("tbody tr").sort(function(a,b){
+              if (d == "Move" || a[d] == null && b[d] == null) return a.row < b.row ? -1 : a.row > b.row ? 1 : 0;
+              if (a[d] == null) return 1; 
+              if (b[d] == null) return -1; 
+              var ad = a[d] || "";
+              var bd = b[d] || ""; 
+              var adn = ad.trim().split(/[^0-9+-]/)[0];
+              var bdn = bd.trim().split(/[^0-9+-]/)[0]; 
+              if (isNaN(parseInt(adn)) && isNaN(parseInt(bdn))) return ad < bd ? 1 : ad > bd ? -1 : a.row < b.row ? -1 : a.row > b.row ? 1 : 0;
+              if (isNaN(parseInt(adn))) return 1;
+              if (isNaN(parseInt(bdn))) return -1;
+              return +adn < +bdn ? 1 : +adn > +bdn ? -1 : a.row < b.row ? -1 : a.row > b.row ? 1 : 0;
+            });});
+  KDTABLE.append("tbody").selectAll("tr").data(rows.filter(function(d){return !isNaN(DATA_KD(d)) && DATA_KD(d) != "";})).enter().append("tr")
+            .classed("UC",function(d){return +DATA_KDBR(d)==HASHKDBR-1 && +DATA_KDR(d)==HASHKDR-1 && +DATA_KD(d)==HASHKD-1; })
+            .selectAll("td").data(function(d){ return [{key:"KD",value:"+"+DATA_KD(d)},{key:"KDR",value:"+"+DATA_KDR(d)},{key:"KDBR",value:"+"+DATA_KDBR(d)}].concat(d3.entries(d));})
             .enter().append("td").text(function(d){return d.value;})
             .on("click",function(d){
               var p = this.parentNode;
@@ -767,17 +882,17 @@ function UCGILLEY(rows){
               KDTABLE.selectAll(".UC").classed("UC",false);
               d3.select(p).classed("UC",true);
               //UCOKI(0);
-              UCKD(+pd["KD Adv."]+1);
-              if (!isNaN(pd["KDR Adv."]) && pd["KDR Adv."] != "") {
-                UCKDR(+pd["KDR Adv."]+1);
-                if (!isNaN(pd["KDRB Adv."]) && pd["KDRB Adv."] != "") {
-                  UCKDBR(+pd["KDRB Adv."]+1);
+              UCKD(+DATA_KD(pd)+1);
+              if (!isNaN(DATA_KDR(pd)) && DATA_KDR(pd) != "") {
+                UCKDR(+DATA_KDR(pd)+1);
+                if (!isNaN(DATA_KDBR(pd)) && DATA_KDBR(pd) != "") {
+                  UCKDBR(+DATA_KDBR(pd)+1);
                 } else {
-                  UCKDBR(+pd["KDR Adv."]+1);
+                  UCKDBR(+DATA_KDR(pd)+1);
                 }
               } else {
-                UCKDR(+pd["KD Adv."]+1);
-                UCKDBR(+pd["KD Adv."]+1);
+                UCKDR(+DATA_KD(pd)+1);
+                UCKDBR(+DATA_KD(pd)+1);
               }
               UCHASH();
               d3.select("#KDMOVE").text(pd["Move"]);
@@ -785,11 +900,25 @@ function UCGILLEY(rows){
 
             });
 
-  FRAMETABLE.append("thead").append("tr").selectAll("th").data(["TOTAL"].concat(keys).concat([""])).enter().append("th").text(function(d){return d;});
+  FRAMETABLE.append("thead").append("tr").selectAll("th").data(["TOTAL"].concat(keys).concat([""])).enter().append("th").text(function(d){return d;})
+            .on("click",function(d,i){
+              FRAMETABLE.selectAll("tbody tr").sort(function(a,b){
+              if (d == "Move" || a[d] == null && b[d] == null) return a.row < b.row ? -1 : a.row > b.row ? 1 : 0;
+              if (a[d] == null) return 1; 
+              if (b[d] == null) return -1; 
+              var ad = a[d] || "";
+              var bd = b[d] || ""; 
+              var adn = ad.trim().split(/[^0-9+-]/)[0];
+              var bdn = bd.trim().split(/[^0-9+-]/)[0]; 
+              if (isNaN(parseInt(adn)) && isNaN(parseInt(bdn))) return ad < bd ? 1 : ad > bd ? -1 : a.row < b.row ? -1 : a.row > b.row ? 1 : 0;
+              if (isNaN(parseInt(adn))) return 1;
+              if (isNaN(parseInt(bdn))) return -1;
+              return +adn < +bdn ? 1 : +adn > +bdn ? -1 : a.row < b.row ? -1 : a.row > b.row ? 1 : 0;
+            });});
   FRAMETABLE.append("tbody").selectAll("tr").data(rows).enter().append("tr")
-            .classed("UC",function(d){return +d["Startup"]==HASHSTARTUP && +d["Active"]==HASHACTIVE && +d["Recovery"]==HASHRECOVERY; })
+            // .classed("UC",function(d){return +DATA_STARTUP(d)==HASHSTARTUP && +d["Active"]==HASHACTIVE && +d["Recovery"]==HASHRECOVERY; })
             .selectAll("td").data(function(d){return [{key:"TOTAL",value:d["Total "] || d["Total"]}].concat(d3.entries(d)).concat([{key:"U C",value:"U C"}]);})
-            .enter().append("td").text(function(d){return d.value;})
+            .enter().append("td").text(function(d){ if (d.value == "dash forward") UCROW.DASH = this; return d.value;})
             .classed("UC",function(d){return d.key=="TOTAL" && FRAMEKILL>1 && +d.value==FRAMEKILL-1; })
             .on("click",function(d){
               var p = this.parentNode;
@@ -819,27 +948,27 @@ function UCGILLEY(rows){
               OKIMOVE = pd;
               if (OKIMOVE != null) {
                 if (!isNaN(OKIMOVE["Active"]) && OKIMOVE["Active"] != "") { HASHACTIVE = +OKIMOVE["Active"]; }  else { HASHACTIVE = 0; }
-                if (!isNaN(OKIMOVE["Startup"]) && OKIMOVE["Startup"] != "") { HASHSTARTUP = +OKIMOVE["Startup"]; } else { HASHSTARTUP = 1; }
+                if (!isNaN(DATA_STARTUP(OKIMOVE)) && DATA_STARTUP(OKIMOVE) != "") { HASHSTARTUP = +DATA_STARTUP(OKIMOVE); } else { HASHSTARTUP = 1; }
                 if (!isNaN(OKIMOVE["Recovery"]) && OKIMOVE["Recovery"] != "") { HASHRECOVERY = +OKIMOVE["Recovery"]; } else { HASHRECOVERY = 0; }
 
-
-                if (!isNaN(OKIMOVE["Active"]) && OKIMOVE["Active"] != "") {
-                  OKILIST[MEOKI].ACTIVE = +OKIMOVE["Active"];
+                OKILIST[MEOKI].MECACTIVE = OKIMOVE["Active"].replace(/\<\d+\>/g,"");
+                if (!isNaN(OKILIST[MEOKI].MECACTIVE) && OKILIST[MEOKI].MECACTIVE != "") {
+                  OKILIST[MEOKI].ACTIVE = +(OKILIST[MEOKI].MECACTIVE);
                   OKILIST[MEOKI].UCACTIVE = "";
                 } else { 
-                  OKILIST[MEOKI].ACTIVE = OKIMOVE["Active"].split(/[()]/)
+                  OKILIST[MEOKI].ACTIVE = OKILIST[MEOKI].MECACTIVE.split(/[()]/)
                   .map(function(x){return parseInt(x)||0;})
                   .reduce(function(a,b){return a+b});
 
-                  OKILIST[MEOKI].UCACTIVE = OKIMOVE["Active"].split(/[()]/)
+                  OKILIST[MEOKI].UCACTIVE = OKILIST[MEOKI].MECACTIVE.split(/[()]/)
                   .map(function(x,i){return parseInt(x)||0;})
                   .reduce(function(a,b,i){return (i==1?Array(1+a).join("A"):a)+Array(1+b).join((i%2)==0?"A":"r")});  
                 }
-                if (!isNaN(OKIMOVE["Startup"]) && OKIMOVE["Startup"] != "") { OKILIST[MEOKI].STARTUP = +OKIMOVE["Startup"]; } else { OKILIST[MEOKI].STARTUP = 1; }
+                if (!isNaN(DATA_STARTUP(OKIMOVE)) && DATA_STARTUP(OKIMOVE) != "") { OKILIST[MEOKI].STARTUP = +DATA_STARTUP(OKIMOVE); } else { OKILIST[MEOKI].STARTUP = 1; }
                 if (!isNaN(OKIMOVE["Recovery"]) && OKIMOVE["Recovery"] != "") { OKILIST[MEOKI].RECOVERY = +OKIMOVE["Recovery"]; } else { OKILIST[MEOKI].RECOVERY = 0; }
 
                 OKILIST[MEOKI].MOVE = OKIMOVE["Move"];
-                OKILIST[MEOKI].DATA = "" + OKIMOVE["Hit Advantage"] + "/" + OKIMOVE["Block Advantage"];
+                OKILIST[MEOKI].DATA = "" + DATA_ADV_HIT(OKIMOVE) + "/" + DATA_ADV_BLK(OKIMOVE);
 
               }
               UCOKI(0);
@@ -857,7 +986,22 @@ function UCGILLEY(rows){
                     return 0;
                   });
 
-  TOTALSTABLE.append("thead").append("tr").selectAll("th").data(["TOTAL"].concat(keys)).enter().append("th").text(function(d){return d;});
+  totalrows.forEach(function(r,i){r.trow=i;})
+  TOTALSTABLE.append("thead").append("tr").selectAll("th").data(["TOTAL"].concat(keys)).enter().append("th").text(function(d){return d;})
+            .on("click",function(d,i){
+              TOTALSTABLE.selectAll("tbody tr").sort(function(a,b){
+              if (d == "Move" || a[d] == null && b[d] == null) return a.trow < b.trow ? -1 : a.trow > b.trow ? 1 : 0;
+              if (a[d] == null) return 1; 
+              if (b[d] == null) return -1; 
+              var ad = a[d] || "";
+              var bd = b[d] || ""; 
+              var adn = ad.trim().split(/[^0-9+-]/)[0];
+              var bdn = bd.trim().split(/[^0-9+-]/)[0]; 
+              if (isNaN(parseInt(adn)) && isNaN(parseInt(bdn))) return ad < bd ? 1 : ad > bd ? -1 : a.trow < b.trow ? -1 : a.trow > b.trow ? 1 : 0;
+              if (isNaN(parseInt(adn))) return 1;
+              if (isNaN(parseInt(bdn))) return -1;
+              return +adn < +bdn ? 1 : +adn > +bdn ? -1 : a.trow < b.trow ? -1 : a.trow > b.trow ? 1 : 0;
+            });});  
   TOTALSTABLE.append("tbody").selectAll("tr").data(totalrows).enter().append("tr")            
             .selectAll("td").data(function(d){ return [{key:"TOTAL",value:d["Total "] || d["Total"]}].concat(d3.entries(d));})
             .enter().append("td").text(function(d){return d.value;})
@@ -889,23 +1033,24 @@ function UCGILLEY(rows){
               OKIMOVE = pd;
               if (OKIMOVE != null) {
 
-                if (!isNaN(OKIMOVE["Active"]) && OKIMOVE["Active"] != "") {
-                  OKILIST[MEOKI].ACTIVE = +OKIMOVE["Active"];
+                OKILIST[MEOKI].MECACTIVE = OKIMOVE["Active"].replace(/\<\d+\>/g,"");
+                if (!isNaN(OKILIST[MEOKI].MECACTIVE) && OKILIST[MEOKI].MECACTIVE != "") {
+                  OKILIST[MEOKI].ACTIVE = +OKILIST[MEOKI].MECACTIVE;
                   OKILIST[MEOKI].UCACTIVE = "";
                 } else { 
-                  OKILIST[MEOKI].ACTIVE = OKIMOVE["Active"].split(/[()]/)
+                  OKILIST[MEOKI].ACTIVE = OKILIST[MEOKI].MECACTIVE.split(/[()]/)
                   .map(function(x){return parseInt(x)||0;})
                   .reduce(function(a,b){return a+b});
 
-                  OKILIST[MEOKI].UCACTIVE = OKIMOVE["Active"].split(/[()]/)
+                  OKILIST[MEOKI].UCACTIVE = OKILIST[MEOKI].MECACTIVE.split(/[()]/)
                   .map(function(x,i){return parseInt(x)||0;})
-                  .reduce(function(a,b,i){return (i==1?Array(1+a).join("A"):a)+Array(1+b).join((i%2)==0?"A":"r")});  
+                  .reduce(function(a,b,i){return (i==1?Array(1+a).join("A"):a)+Array(1+b).join((i%2)==0?"A":"r")});
                 }
-                if (!isNaN(OKIMOVE["Startup"]) && OKIMOVE["Startup"] != "") { OKILIST[MEOKI].STARTUP = +OKIMOVE["Startup"]; } else { OKILIST[MEOKI].STARTUP = 1; }
+                if (!isNaN(DATA_STARTUP(OKIMOVE)) && DATA_STARTUP(OKIMOVE) != "") { OKILIST[MEOKI].STARTUP = +DATA_STARTUP(OKIMOVE); } else { OKILIST[MEOKI].STARTUP = 1; }
                 if (!isNaN(OKIMOVE["Recovery"]) && OKIMOVE["Recovery"] != "") { OKILIST[MEOKI].RECOVERY = +OKIMOVE["Recovery"]; } else { OKILIST[MEOKI].RECOVERY = 0; }
 
                 OKILIST[MEOKI].MOVE = OKIMOVE["Move"];
-                OKILIST[MEOKI].DATA = "" + OKIMOVE["Hit Advantage"] + "/" + OKIMOVE["Block Advantage"];
+                OKILIST[MEOKI].DATA = "" + DATA_ADV_HIT(OKIMOVE) + "/" + DATA_ADV_BLK(OKIMOVE);
 
               }
               UCOKI(0);
@@ -925,6 +1070,7 @@ function UCTOTALROW(pre,start,run,total) {
     if (rowtotal+run>total) return;
     var loops = Math.floor((total-run)/rowtotal);
     if ((row["Command"]||"")=="HP+HK")loops = 1;
+    if ((row["Command"]||"")=="5VT")loops = 1;
     for (var loop=loops;loop>=1;loop--) {
       if (rowtotal*loop+run==total) {
         TOTALSDIV.append("div").html(pre + (", " + rowtotal + "F " + row["Move"] +  " <span class='CMD'>" + row["Command"] + "</span>").repeat(loop));
@@ -971,6 +1117,8 @@ d3.select("body").on("keydown", function() {
     case 46: 
       OKILIST[MEOKI].FRAMEKILL = 1;
       OKILIST[MEOKI].STARTUP = 0;
+      OKILIST[MEOKI].MECACTIVE = "";
+      OKILIST[MEOKI].UCACTIVE = "";
       OKILIST[MEOKI].ACTIVE = 0;
       OKILIST[MEOKI].RECOVERY = 0;
       OKILIST[MEOKI].MOVE = "";
@@ -978,13 +1126,20 @@ d3.select("body").on("keydown", function() {
       break;
 
     case 109: case 189:
+      if (d3.event.ctrlKey) break;
       OKILIST[MEOKI].FRAMEKILL -= 1;
       UCOKI(0);
       break;
 
     case 107: case 187:
+      if (d3.event.ctrlKey) break;
       OKILIST[MEOKI].FRAMEKILL += 1;
       UCOKI(0);
+      break;
+
+
+    case 68:
+      if (UCROW.DASH) UCROW.DASH.click();
       break;
   } 
   // console.log(d3.event);
